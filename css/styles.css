@@ -1,0 +1,19 @@
+/* custom properties */
+
+:root {
+    --ff-primary: 'Red Hat Display', sans-serif;
+
+    --ff-400: 1rem;
+
+    --fw-500: 500;
+    --fw-700: 700;
+    --fw-900: 900;
+
+    --clr-primary-100: hsl(225, 100%, 98%);
+    --clr-primary-400: hsl(224,23%, 55%);
+    --clr-primary-900: hsl(223, 47%, 23%);
+
+    --clr-secondary-100: hsl(225, 100%, 94%);
+    --clr-secondary-400: hsl(245, 75%, 52%);
+
+}
