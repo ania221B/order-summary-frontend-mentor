@@ -36,7 +36,7 @@
     position: relative;
 }
 
-.container--small {
+.container[data-type="small"] {
     width: 90%;
     max-width: 27rem;
 }
@@ -91,19 +91,25 @@ picture {
     inset: 0 0 0 auto;
 }
 
+button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
 /* ===== CARD ===== */
 
-.order-card {
+.card {
     border-radius: var(--br-all-round);
     background-color: var(--clr-neutral-100);
     box-shadow: 0 1em 2em rgba(114, 128, 167, 0.3);
 }
 
-.card-img > img {
+.card__img > img {
     border-radius: var(--br-top);
 }
 
-.card-content {
+.card__content {
     display: flex;
     flex-direction: column;
 
@@ -114,14 +120,14 @@ picture {
 }
 
 @media (min-width: 24em) {
-    .card-content {        
+    .card__content {        
         padding-block: 2em;
         padding-inline: 2.75em;
       }
     
 }
 
-.order-details {
+.plan {
 
     display: flex;
     flex-direction: row;
@@ -134,12 +140,12 @@ picture {
     border-radius: var(--br-all-round-small);
 }
 
-.order-details > * + * {
+.plan > * + * {
     margin-inline-start: 1em;
 }
 
 @media (min-width: 40em) {
-    .order-details > * + * {
+    .plan > * + * {
         margin-inline-start: 1.5em;
     }
 }
@@ -159,13 +165,13 @@ picture {
     text-decoration: none;
 }
 
-.btn--primary {
+.btn[data-type="primary"] {
     --bg: var(--clr-secondary-400);
     --fg: var(--clr-primary-100);
     --hover: var(--clr-secondary-200); 
 }
 
-.btn--dark-bg {
+.btn[data-theme="dark"] {
     border-radius: var(--br-all-round-small);
     box-shadow: 0 1em 2em rgba(56, 41, 224, 0.3);
 
@@ -173,7 +179,7 @@ picture {
     z-index: 1;
 }
 
-.btn--dark-bg::before {
+.btn[data-theme="dark"]::before {
     content: "";
     width: 100%;
     height: 100%;
@@ -189,12 +195,12 @@ picture {
 
 }
 
-.btn--dark-bg:hover::before,
-.btn--dark-bg:focus::before {
+.btn[data-theme="dark"]:hover::before,
+.btn[data-theme="dark"]:focus::before {
     opacity: 1;
 }
 
-.btn--primary--reversed {
+.btn[data-subtype="reversed"] {
     --bg: none;
     --fg: var(--clr-secondary-400);
 
@@ -208,14 +214,14 @@ picture {
     text-decoration: underline;
 }
 
-.btn--primary--reversed:hover,
-.btn--primary--reversed:focus {
+.btn[data-subtype="reversed"]:hover,
+.btn[data-subtype="reversed"]:focus {
     color: var(--hover);
     text-decoration: none;
 }
 
 
-.btn--secondary {
+.btn[data-type="secondary"] {
     --fg: var(--clr-primary-400);
     --fg-hover: var(--clr-primary-900);
     border-radius: var(--br-all-round-small);
@@ -223,7 +229,7 @@ picture {
     padding-inline: 0;
 }
 
-.btn--secondary:hover,
-.btn--secondary:focus {
+.btn[data-type="secondary"]:hover,
+.btn[data-type="secondary"]:focus {
     color: var(--fg-hover);
 }

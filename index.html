@@ -45,11 +45,11 @@
         <img src="images/pattern-background-mobile.svg" alt="" />
       </picture>
 
-      <div class="order-card container container--small">
-        <div class="card-img">
+      <div class="card container" data-type="small">
+        <div class="card__img">
           <img src="images/illustration-hero.svg" alt="" />
         </div>
-        <div class="card-content flow">
+        <div class="card__content flow">
           <header class="flow">
             <h1>Order Summary</h1>
             <p>
@@ -57,21 +57,28 @@
               on any device anywhere you like!
             </p>
           </header>
-          <div class="order-details">
+          <div class="plan">
             <img src="images/icon-music.svg" alt="" />
-            <div class="plan-details">
+            <div class="plan__details">
               <h2>Annual Plan</h2>
               <p>$59.99/year</p>
             </div>
-            <a href="" class="btn btn--primary btn--primary--reversed"
-              >Change</a
+            <button
+              href=""
+              class="btn"
+              data-type="primary"
+              data-subtype="reversed"
             >
+              Change
+            </button>
           </div>
 
-          <a href="" class="btn btn--primary btn--dark-bg"
-            >Proceed to Payment</a
-          >
-          <a href="" class="btn btn--secondary">Cancel Order</a>
+          <button href="" class="btn" data-type="primary" data-theme="dark">
+            Proceed to Payment
+          </button>
+          <button href="" class="btn" data-type="secondary">
+            Cancel Order
+          </button>
         </div>
       </div>
     </section>
