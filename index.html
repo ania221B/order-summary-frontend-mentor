@@ -23,35 +23,19 @@
     <link rel="stylesheet" href="css/styles.css" />
 
     <title>Frontend Mentor | Order summary card</title>
-
-    <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
-    <style>
-      .attribution {
-        font-size: 11px;
-        text-align: center;
-      }
-      .attribution a {
-        color: hsl(228, 45%, 44%);
-      }
-    </style>
   </head>
-  <body class="grid">
-    <section class="container grid">
-      <picture>
-        <source
-          srcset="images/pattern-background-desktop.svg"
-          media="(min-width: 375px)"
-        />
-        <img src="images/pattern-background-mobile.svg" alt="" />
-      </picture>
-
-      <div class="card container" data-type="small">
+  <body>
+    <main>
+      <div class="card container">
         <div class="card__img">
-          <img src="images/illustration-hero.svg" alt="" />
+          <img
+            src="images/illustration-hero.svg"
+            alt="cartoon figure with headphones on their head dancing to music from a phone held in one hand with an outline of a city and music notes in the background"
+          />
         </div>
         <div class="card__content flow">
           <header class="flow">
-            <h1>Order Summary</h1>
+            <h2>Order Summary</h2>
             <p>
               You can now listen to millions of songs, audiobooks, and podcasts
               on any device anywhere you like!
@@ -60,34 +44,31 @@
           <div class="plan">
             <img src="images/icon-music.svg" alt="" />
             <div class="plan__details">
-              <h2>Annual Plan</h2>
+              <h3>Annual Plan</h3>
               <p>$59.99/year</p>
             </div>
-            <button
-              href=""
-              class="btn"
-              data-type="primary"
-              data-subtype="reversed"
-            >
+            <button href="#" class="btn" data-type="primary" data-theme="link">
               Change
             </button>
           </div>
-
-          <button href="" class="btn" data-type="primary" data-theme="dark">
+          <button href="#" class="btn" data-type="primary" data-theme="dark">
             Proceed to Payment
           </button>
-          <button href="" class="btn" data-type="secondary">
+          <button href="#" class="btn" data-type="secondary">
             Cancel Order
           </button>
         </div>
       </div>
-    </section>
+    </main>
 
-    <div class="attribution">
-      Challenge by
-      <a href="https://www.frontendmentor.io?ref=challenge" target="_blank"
-        >Frontend Mentor</a
-      >. Coded by <a href="#">Ania</a>.
-    </div>
+    <footer class="container">
+      <div class="attribution">
+        Challenge by
+        <a href="https://www.frontendmentor.io?ref=challenge" target="_blank"
+          >Frontend Mentor</a
+        >. Coded by
+        <a href="https://www.frontendmentor.io/profile/ania221B">ania221B</a>.
+      </div>
+    </footer>
   </body>
 </html>
