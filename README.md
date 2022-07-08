@@ -29,7 +29,7 @@ Users should be able to:
 ### Links
 
 - Solution URL: [GitHub](https://github.com/ania221B/order-summary-frontend-mentor)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+- Live Site URL: [GitHub Pages](https://ania221b.github.io/order-summary-frontend-mentor/)
 
 ## My process
 
