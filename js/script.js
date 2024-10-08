@@ -105,7 +105,7 @@ function switchScreen (button) {
  */
 function validateForm () {
   const errors = {}
-  const namePattern = /^[\p{L}\-]+\s[\p{L}\-\s']{2,}$/u
+  const namePattern = /^[\p{L}-]+\s[\p{L}\-\s']{2,}$/u
   const cardNumber = form.querySelector('#card-number').value.trim()
   const cardHolderName = form.querySelector('#card-holder-name').value.trim()
   const cardExpiryDate = form.querySelector('#card-expiry-date').value.trim()
