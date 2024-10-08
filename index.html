@@ -1,41 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- displays site properly based on user's device -->
 
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="./images/favicon-32x32.png"
-    />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- displays site properly based on user's device -->
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@500;700;900&display=swap"
-      rel="stylesheet"
-    />
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png" />
 
-    <link rel="stylesheet" href="css/reset.css" />
-    <link rel="stylesheet" href="css/styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@500;700;900&display=swap" rel="stylesheet" />
 
-    <title>Frontend Mentor | Order summary card</title>
-  </head>
-  <body>
-    <main>
-      <div class="card container">
+  <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <title>Frontend Mentor | Order summary card</title>
+
+  <script src="js/script.js" defer></script>
+</head>
+
+<body>
+  <main>
+    <section class="subscriptions section">
+      <div class="container">
+        <div class="cards grid-auto-fit">
+          <div class="card">
+            <div class="card__img">
+              <img src="images/illustration-hero.svg" alt="cartoon figure with headphones on their head dancing to music from a phone held in one hand with an outline of a city and music notes in the background" />
+            </div>
+            <div class="card__content card__content--subscription flow">
+              <header class="flow">
+                <h2 class="jsPlanType small-text">free</h2>
+                <p class="h2 jsPrice">
+                  $0.00<span>/month</span>
+                </p>
+              </header>
+              <p>
+                Listen to millions of songs, audiobooks, and podcasts
+                on any device anywhere you like!
+              </p>
+              <h3 class="h3 divider">Plus</h3>
+              <ul>
+                <li>Stream on 1 device</li>
+              </ul>
+              <button type="button" class="btn jsBtn jsSubscribeBtn" data-type="primary" data-theme="dark">
+                Subscribe
+              </button>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card__img">
+              <img src="images/illustration-hero.svg" alt="cartoon figure with headphones on their head dancing to music from a phone held in one hand with an outline of a city and music notes in the background" />
+            </div>
+            <div class="card__content card__content--subscription flow">
+              <header class="flow">
+                <h2 class="jsPlanType small-text">monthly</h2>
+                <p class="h2 jsPrice">
+                  $7.99<span>/month</span>
+                </p>
+              </header>
+              <p>
+                Listen to millions of songs, audiobooks, and podcasts
+                on any device anywhere you like!
+              </p>
+              <h3 class="h3 divider">Plus</h3>
+              <ul>
+                <li>Stream on up to <span>5 devices</span> at the same time</li>
+                <li>View content offline</li>
+                <li>Listen to new content early</li>
+              </ul>
+              <button type="button" class="btn jsBtn jsSubscribeBtn" data-type="primary" data-theme="dark">
+                Subscribe
+              </button>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card__img">
+              <img src="images/illustration-hero.svg" alt="cartoon figure with headphones on their head dancing to music from a phone held in one hand with an outline of a city and music notes in the background" />
+            </div>
+            <div class="card__content card__content--subscription flow">
+              <header class="flow">
+                <h2 class="jsPlanType small-text">annual</h2>
+                <p class="h2 jsPrice">
+                  $59.99<span>/year</span>
+                </p>
+              </header>
+              <p>
+                Listen to millions of songs, audiobooks, and podcasts
+                on any device anywhere you like!
+              </p>
+              <h3 class="h3 divider">Plus</h3>
+              <ul>
+                <li>Stream on up to <span>7 devices</span> at the same time</li>
+                <li>View content offline</li>
+                <li>Listen to content early</li>
+                <li>Get exclusive discounts</li>
+              </ul>
+              <button type="button" class="btn jsBtn jsSubscribeBtn" data-type="primary" data-theme="dark">
+                Subscribe
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="confirmation section" hidden>
+      <div class="card confirmation-card container">
         <div class="card__img">
-          <img
-            src="images/illustration-hero.svg"
-            alt="cartoon figure with headphones on their head dancing to music from a phone held in one hand with an outline of a city and music notes in the background"
-          />
+          <img src="images/illustration-hero.svg" alt="cartoon figure with headphones on their head dancing to music from a phone held in one hand with an outline of a city and music notes in the background" />
         </div>
         <div class="card__content flow">
           <header class="flow">
-            <h2>Order Summary</h2>
+            <h2 class="h2">Order Summary</h2>
             <p>
               You can now listen to millions of songs, audiobooks, and podcasts
               on any device anywhere you like!
@@ -43,32 +122,116 @@
           </header>
           <div class="plan">
             <img src="images/icon-music.svg" alt="" />
-            <div class="plan__details">
-              <h3>Annual Plan</h3>
-              <p>$59.99/year</p>
-            </div>
-            <button href="#" class="btn" data-type="primary" data-theme="link">
+            <!-- plan details go here -->
+            <button type="button" class="btn jsBtn jsChangeBtn" data-type="primary" data-theme="link">
               Change
             </button>
           </div>
-          <button href="#" class="btn" data-type="primary" data-theme="dark">
+          <button type="button" class="btn jsBtn jsPaymentBtn" data-type="primary" data-theme="dark">
             Proceed to Payment
           </button>
-          <button href="#" class="btn" data-type="secondary">
+          <button type="button" class="btn jsBtn jsCancelBtn" data-type="secondary">
             Cancel Order
           </button>
         </div>
       </div>
-    </main>
+    </section>
 
-    <footer class="container">
-      <div class="attribution">
-        Challenge by
-        <a href="https://www.frontendmentor.io?ref=challenge" target="_blank"
-          >Frontend Mentor</a
-        >. Coded by
-        <a href="https://www.frontendmentor.io/profile/ania221B">ania221B</a>.
+
+    <section class="cancellation section" hidden>
+      <div class="card cancellation-card container">
+        <div class="card__img">
+          <img src="images/illustration-hero.svg" alt="cartoon figure with headphones on their head dancing to music from a phone held in one hand with an outline of a city and music notes in the background" />
+        </div>
+        <div class="card__content flow">
+          <header class="flow">
+            <h2 class="h2">Order Cancelled</h2>
+            <p>
+              Your order has been succesfully cancelled and we're sorry to see you go! If you ever decide to return, we'll be glad to welcome you back. Feel free to reach out if you have any questions or feedback!
+            </p>
+          </header>
+
+          <button type="button" class="btn jsBtn jsHomeBtn" data-type="primary" data-theme="dark">
+            Back to Home
+          </button>
+        </div>
       </div>
-    </footer>
-  </body>
+    </section>
+
+    <section class="payment section" hidden>
+      <div class="card payment-card container">
+        <div class="card__img">
+          <img src="images/illustration-hero.svg" alt="cartoon figure with headphones on their head dancing to music from a phone held in one hand with an outline of a city and music notes in the background" />
+        </div>
+        <div class="card__content flow">
+          <form class="payment__form">
+            <h2 class="h2">Payment Details</h2>
+            <div class="form__control-wrapper">
+              <label for="card-number">Card Number:</label>
+              <input id="card-number" type="tel" inputmode="number" minlength="13" maxlength="19" pattern="[0-9\s]{13,19}" placeholder="1234 5678 9012 3456" required>
+              <div class="error-message"></div>
+            </div>
+
+            <div class="form__control-wrapper">
+              <label for="card-holder-name">Name on card:</label>
+              <input id="card-holder-name" type="text" placeholder="Jane Doe" required>
+              <div class="error-message"></div>
+            </div>
+
+            <div class="form__control-wrapper">
+              <label for="card-expiry-date">Expiry:</label>
+              <!-- dodać js do miesąca i roku -->
+              <input id="card-expiry-date" type="month" min="" value="" required>
+              <div class="error-message"></div>
+            </div>
+
+            <div class="form__control-wrapper">
+              <label for="card-code">CVV:</label>
+              <input id="card-code" type="text" pattern="\d{3,4}" placeholder="CVV" required>
+              <div class="error-message"></div>
+            </div>
+
+            <div class="form__buttons">
+              <button type="submit" class="btn jsBtn jsOrderBtn" data-type="primary" data-theme="dark">
+                Place Order
+              </button>
+              <button type="button" class="btn jsBtn jsCancelBtn" data-type="secondary">
+                Cancel Order
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="thank-you section" hidden>
+      <div class="card thank-you-card container">
+        <div class="card__img">
+          <img src="images/illustration-hero.svg" alt="cartoon figure with headphones on their head dancing to music from a phone held in one hand with an outline of a city and music notes in the background" />
+        </div>
+        <div class="card__content flow">
+          <header class="flow">
+            <h2 class="h2">Order Placed</h2>
+            <p>
+              Your order has been succesfully placed and we're happy to see you join SoundSpace! We hope you enjoy listening together with us. Feel free to reach out if you have any questions or feedback!
+            </p>
+          </header>
+
+          <button type="button" class="btn jsBtn jsHomeBtn" data-type="primary" data-theme="dark">
+            Back to Home
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container">
+    <div class="attribution">
+      Challenge by
+      <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. Coded by
+      <a href="https://www.frontendmentor.io/profile/ania221B">ania221B</a>.
+    </div>
+  </footer>
+</body>
+
 </html>
