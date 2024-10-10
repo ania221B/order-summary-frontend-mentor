@@ -351,6 +351,10 @@ footer {
 .error input {
   border: 2px solid var(--clr-accent);
 }
+.error input:hover,
+.error input:focus {
+  outline-color: var(--clr-accent);
+}
 
 .error-message {
   grid-row: 2;
