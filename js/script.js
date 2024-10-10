@@ -12,7 +12,21 @@ const form = payment.querySelector('.payment__form')
  * @returns {String} capitalized string of text
  */
 function capitalizeText (text) {
-  return text.substring(0, 1).toUpperCase() + text.substring(1)
+  const text1 = text.split(' ')
+
+  const text2 = text1.map(item => {
+    if (item.includes('-')) {
+      return item
+        .split('-')
+        .map(item => item.substring(0, 1).toUpperCase() + item.substring(1))
+        .join('-')
+    }
+    return item
+  })
+
+  return text2
+    .map(item => item.substring(0, 1).toUpperCase() + item.substring(1))
+    .join(' ')
 }
 /**
  * Gets the type and price of the selected text
@@ -60,6 +74,7 @@ function createPlanDetails (selectedPlan) {
  */
 function switchScreen (button) {
   sections.forEach(section => section.setAttribute('hidden', true))
+
   if (button.classList.contains('jsSubscribeBtn')) {
     confirmation.removeAttribute('hidden')
   }
@@ -77,7 +92,8 @@ function switchScreen (button) {
       form.querySelectorAll('input').forEach(input => {
         clearError(input)
       })
-      form.reset()
+
+      resetForm()
     }
   }
 
@@ -90,7 +106,7 @@ function switchScreen (button) {
     button.closest('.section').classList.contains('form-valid')
   ) {
     thankYou.removeAttribute('hidden')
-    form.reset()
+    resetForm()
   } else if (
     button.classList.contains('jsOrderBtn') &&
     button.closest('.section').classList.contains('form-invalid')
@@ -100,44 +116,172 @@ function switchScreen (button) {
 }
 
 /**
+ * Sets 'min' and 'value' attributes for card expiry date input
+ */
+function setMinDate () {
+  const expiryInput = form.querySelector('#card-expiry-date')
+  const currentDate = new Date()
+  const currentYear = currentDate.getFullYear()
+  const currentMonth = (currentDate.getMonth() + 1).toString().padStart(2, '0')
+  const formattedDate = `${currentYear}-${currentMonth}`
+
+  expiryInput.setAttribute('min', `${formattedDate}`)
+  expiryInput.setAttribute('value', `${formattedDate}`)
+}
+
+/**
+ * Sets attribute to indicate that input has been validated and is valid
+ * @param {HTMLElement} targetInput input to mark
+ */
+function markAsValid (targetInput) {
+  targetInput.setAttribute('data-valid', 'true')
+}
+/**
+ * Sets attribute to indicate that input has been validated and is invalid
+ * @param {HTMLElement} targetInput input to mark
+ */
+function markAsInvalid (targetInput) {
+  targetInput.setAttribute('data-valid', 'false')
+}
+/**
+ * Checks if the input has already been validated
+ * @param {HTMLElement} targetInput input to check
+ */
+function checkValidity (targetInput) {
+  return targetInput.getAttribute('data-valid') === 'true'
+}
+
+/**
+ * Checks the existence and length of value in input field
+ * @param {HTMLElement} targetInput input field to check
+ * @param {Number} min minimum length value
+ * @param {Number} max maximum length value
+ * @returns {String} error message if checks aren't passed or null if otherwise
+ */
+function checkValue (targetInput, min, max) {
+  const targetInputWrapper = targetInput.parentElement
+  const targetLabel = targetInputWrapper.querySelector('label').textContent
+  const value = targetInput.value.trim()
+  if (!value) {
+    return `Please provide ${targetLabel}`
+  } else if (value.length < min) {
+    return `${targetLabel} must have at least ${min} digits`
+  } else if (value.length > max) {
+    return `${targetLabel} must have at most ${max} digits`
+  } else {
+    return null
+  }
+}
+
+/**
+ * Checks if date is grater than current month
+ * @param {String} date hyphenated date to check
+ * @returns {Boolean}
+ */
+function checkDate (date) {
+  const currentDate = new Date()
+  const currentYear = currentDate.getFullYear()
+  const currentMonth = currentDate.getMonth() + 1
+  const [yearToCheck, monthToCheck] = date
+    .split('-')
+    .map(item => parseInt(item))
+
+  return (
+    yearToCheck > currentYear ||
+    (yearToCheck === currentYear && monthToCheck >= currentMonth)
+  )
+}
+
+/**
+ * Checks card number value
+ * @returns {String} error messsage or null
+ */
+function validateCardNumber () {
+  const cardNumber = form.querySelector('#card-number')
+  const isLengthOK = checkValue(cardNumber, 13, 19)
+
+  if (isLengthOK) {
+    return isLengthOK
+  }
+  return null
+}
+
+/**
+ * Checks card holder name value
+ * @returns {String} error messsage or null
+ */
+function validateHolderName () {
+  const namePattern = /^[\p{L}-]+\s[\p{L}\-\s']{2,}$/u
+  const cardHolderName = form.querySelector('#card-holder-name').value.trim()
+  if (!cardHolderName) {
+    return 'Please provide name on card'
+  } else if (!cardHolderName.match(namePattern)) {
+    return 'Use letters & hyphens for name & surname'
+  }
+  return null
+}
+
+/**
+ * Checks card expiry date value
+ * @returns {String} error messsage or null
+ */
+function validateExpiryDate () {
+  const cardExpiryDate = form.querySelector('#card-expiry-date').value.trim()
+  const isDateFuture = checkDate(cardExpiryDate)
+  if (!cardExpiryDate) {
+    return 'Please provide card expiry date'
+  }
+  if (!isDateFuture) {
+    return 'Must be current month or later'
+  }
+  return null
+}
+
+/**
+ * Checks card verification code value
+ * @returns {String} error messsage or null
+ */
+function validateCardCode () {
+  const cardCode = form.querySelector('#card-code')
+  const cardCodeValue = cardCode.value.trim()
+  const cardNumberValue = form.querySelector('#card-number').value.trim()
+  const isLengthOK = checkValue(cardCode, 3, 4)
+
+  if (isLengthOK) {
+    return isLengthOK
+  }
+  if (
+    cardNumberValue.substring(0, 2) === '34' ||
+    cardNumberValue.substring(0, 2) === '37'
+  ) {
+    if (cardCodeValue.length < 4) {
+      return 'Card code must be 4 digits'
+    }
+  }
+  return null
+}
+
+/**
  * Checks if form inputs were correctly filled in
  * @returns {Object} errors object containing error messages for invalid inputs
  */
 function validateForm () {
-  const errors = {}
-  const namePattern = /^[\p{L}-]+\s[\p{L}\-\s']{2,}$/u
-  const cardNumber = form.querySelector('#card-number').value.trim()
-  const cardHolderName = form.querySelector('#card-holder-name').value.trim()
-  const cardExpiryDate = form.querySelector('#card-expiry-date').value.trim()
-  const cardCode = form.querySelector('#card-code').value.trim()
-
-  if (!cardNumber) {
-    errors.cardNumber = 'Please provide card number'
-  } else if (cardNumber.length < 13) {
-    errors.cardNumber = 'Card number must have at least 13 digits'
-  } else if (cardNumber.length > 19) {
-    errors.cardNumber = 'Card number must have at most 19 digits'
+  const errors = {
+    cardNumber: validateCardNumber(),
+    cardHolderName: validateHolderName(),
+    cardExpiryDate: validateExpiryDate(),
+    cardCode: validateCardCode()
   }
-
-  if (!cardHolderName) {
-    errors.cardHolderName = 'Please provide name on card'
-  } else if (!cardHolderName.match(namePattern)) {
-    errors.cardHolderName = 'Use letters & hyphens for name & surname'
-  }
-
-  if (!cardExpiryDate) {
-    errors.cardExpiryDate = 'Please provide card expiry date'
-  }
-
-  if (!cardCode) {
-    errors.cardCode = 'Please provide Card Verification Value'
-  } else if (cardCode.length < 3) {
-    errors.cardCode = 'CVV must have at least 3 digits'
-  } else if (cardCode.length > 4) {
-    errors.cardCode = 'CVV must have at most 4 digits'
-  }
-
   return errors
+}
+
+/**
+ * Resets form and removes any classes indicating its validity
+ */
+function resetForm () {
+  form.closest('.section').classList.remove('form-valid')
+  form.closest('.section').classList.remove('form-invalid')
+  form.reset()
 }
 
 /**
@@ -207,6 +351,38 @@ function makeHyphenatedLowercaseCamelCase (text) {
     .join('')
 }
 
+/**
+ * Checks if string is an empty one
+ * @param {String} currentValue string to check
+ * @returns {Boolean}
+ */
+function isNull (currentValue) {
+  return currentValue === null
+}
+
+/**
+ * Group card number digits into groups of four
+ * @param {String} cardNumber card number to format
+ * @returns {String} grouped string
+ */
+function formatCardNumber (cardNumber) {
+  return [...cardNumber]
+    .reduce((groups, item) => {
+      const lastGroup = groups[groups.length - 1]
+      if (!lastGroup || lastGroup.length === 4) {
+        groups.push([item])
+      } else {
+        lastGroup.push(item)
+      }
+      return groups
+    }, [])
+    .map(item => item.join(''))
+    .join(' ')
+}
+
+window.addEventListener('load', e => {
+  setMinDate()
+})
 document.body.addEventListener('click', e => {
   if (!e.target.closest('.jsBtn')) return
 
@@ -218,7 +394,7 @@ document.body.addEventListener('click', e => {
   if (e.target.closest('.jsOrderBtn')) {
     e.preventDefault()
     const existingErrors = validateForm()
-    const isFormValid = Object.keys(existingErrors).length === 0
+    const isFormValid = Object.values(existingErrors).every(isNull)
 
     if (isFormValid) {
       form.closest('.section').classList.add('form-valid')
@@ -227,12 +403,16 @@ document.body.addEventListener('click', e => {
       const errorArray = Object.entries(existingErrors)
 
       form.closest('.section').classList.add('form-invalid')
+
       errorArray.forEach(item => {
         const [input, value] = item
-        const targetInput = form.querySelector(
-          `#${makeCamelCaseHyphenatedLowercase(input)}`
-        )
-        createError(targetInput, value)
+        if (value !== null) {
+          const targetInput = form.querySelector(
+            `#${makeCamelCaseHyphenatedLowercase(input)}`
+          )
+          markAsInvalid(targetInput)
+          createError(targetInput, value)
+        }
       })
     }
   }
@@ -240,12 +420,55 @@ document.body.addEventListener('click', e => {
   switchScreen(e.target)
 })
 
-form.querySelectorAll('input').forEach(input => {
-  input.addEventListener('input', e => {
-    const inputName = makeHyphenatedLowercaseCamelCase(e.target.id)
-    const errors = validateForm()
-    if (!errors[inputName]) {
+form.addEventListener('input', e => {
+  if (!e.target.closest('input')) return
+
+  const isInputValid = checkValidity(e.target)
+
+  if (isInputValid) return
+
+  let error = ''
+  const inputName = makeHyphenatedLowercaseCamelCase(e.target.id)
+
+  if (inputName === 'cardNumber') {
+    error = validateCardNumber()
+  }
+  if (inputName === 'cardHolderName') {
+    error = validateHolderName()
+  }
+  if (inputName === 'cardExpiryDate') {
+    error = validateExpiryDate()
+  }
+  if (inputName === 'cardCode') {
+    error = validateCardCode()
+  }
+
+  if (!error) {
+    clearError(e.target)
+    markAsValid(e.target)
+  }
+})
+
+form.addEventListener('change', e => {
+  if (!e.target.closest('input')) return
+
+  if (e.target.closest('#card-expiry-date')) {
+    const isInputValid = checkValidity(e.target)
+    if (isInputValid) return
+
+    const error = validateCardCode()
+
+    if (!error) {
       clearError(e.target)
+      markAsValid(e.target)
     }
-  })
+  }
+
+  if (e.target.closest('#card-holder-name')) {
+    e.target.value = capitalizeText(e.target.value)
+  }
+
+  if (e.target.closest('#card-number')) {
+    e.target.value = formatCardNumber(e.target.value)
+  }
 })
