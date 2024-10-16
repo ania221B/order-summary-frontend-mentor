@@ -2,22 +2,23 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- displays site properly based on user's device -->
 
-  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@500;700;900&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@500;700;900&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/reset.css" />
-  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/styles.css">
 
   <title>Frontend Mentor | Order summary card</title>
 
-  <script src="js/script.js" defer></script>
+  <script src="js/polyfill.js" defer></script>
+  <script src="js/main.js" defer></script>
 </head>
 
 <body>
@@ -27,7 +28,7 @@
         <div class="cards grid-auto-fit">
           <div class="card">
             <div class="card__img">
-              <img src="images/illustration-hero.svg" alt="cartoon figure with headphones on their head dancing to music from a phone held in one hand with an outline of a city and music notes in the background" />
+              <img src="images/illustration-hero.svg" alt="cartoon figure with headphones on their head dancing to music from a phone held in one hand with an outline of a city and music notes in the background">
             </div>
             <div class="card__content card__content--subscription flow">
               <header class="flow">
@@ -51,7 +52,7 @@
           </div>
           <div class="card">
             <div class="card__img">
-              <img src="images/illustration-hero.svg" alt="cartoon figure with headphones on their head dancing to music from a phone held in one hand with an outline of a city and music notes in the background" />
+              <img src="images/illustration-hero.svg" alt="cartoon figure with headphones on their head dancing to music from a phone held in one hand with an outline of a city and music notes in the background">
             </div>
             <div class="card__content card__content--subscription flow">
               <header class="flow">
@@ -77,7 +78,7 @@
           </div>
           <div class="card">
             <div class="card__img">
-              <img src="images/illustration-hero.svg" alt="cartoon figure with headphones on their head dancing to music from a phone held in one hand with an outline of a city and music notes in the background" />
+              <img src="images/illustration-hero.svg" alt="cartoon figure with headphones on their head dancing to music from a phone held in one hand with an outline of a city and music notes in the background">
             </div>
             <div class="card__content card__content--subscription flow">
               <header class="flow">
@@ -110,7 +111,7 @@
     <section class="confirmation section" hidden>
       <div class="card confirmation-card container">
         <div class="card__img">
-          <img src="images/illustration-hero.svg" alt="cartoon figure with headphones on their head dancing to music from a phone held in one hand with an outline of a city and music notes in the background" />
+          <img src="images/illustration-hero.svg" alt="cartoon figure with headphones on their head dancing to music from a phone held in one hand with an outline of a city and music notes in the background">
         </div>
         <div class="card__content flow">
           <header class="flow">
@@ -121,7 +122,7 @@
             </p>
           </header>
           <div class="plan">
-            <img src="images/icon-music.svg" alt="" />
+            <img src="images/icon-music.svg" alt="">
             <!-- plan details go here -->
             <button type="button" class="btn jsBtn jsChangeBtn" data-type="primary" data-theme="link">
               Change
@@ -141,7 +142,7 @@
     <section class="cancellation section" hidden>
       <div class="card cancellation-card container">
         <div class="card__img">
-          <img src="images/illustration-hero.svg" alt="cartoon figure with headphones on their head dancing to music from a phone held in one hand with an outline of a city and music notes in the background" />
+          <img src="images/illustration-hero.svg" alt="cartoon figure with headphones on their head dancing to music from a phone held in one hand with an outline of a city and music notes in the background">
         </div>
         <div class="card__content flow">
           <header class="flow">
@@ -161,14 +162,14 @@
     <section class="payment section" hidden>
       <div class="card payment-card container">
         <div class="card__img">
-          <img src="images/illustration-hero.svg" alt="cartoon figure with headphones on their head dancing to music from a phone held in one hand with an outline of a city and music notes in the background" />
+          <img src="images/illustration-hero.svg" alt="cartoon figure with headphones on their head dancing to music from a phone held in one hand with an outline of a city and music notes in the background">
         </div>
         <div class="card__content flow">
           <form class="payment__form">
             <h2 class="h2">Payment Details</h2>
             <div class="form__control-wrapper">
               <label for="card-number">Card Number:</label>
-              <input id="card-number" type="tel" inputmode="number" minlength="13" maxlength="19" pattern="[0-9\s]{13,19}" placeholder="1234 5678 9012 3456" required>
+              <input id="card-number" class="numeric-input" type="text" data-inputmode="numeric" minlength="13" maxlength="19" pattern="[0-9\s]{13,19}" placeholder="1234 5678 9012 3456" required>
               <div class="error-message"></div>
             </div>
 
@@ -180,8 +181,8 @@
 
             <div class="form__control-wrapper">
               <label for="card-expiry-date">Expiry:</label>
-              <!-- dodać js do miesąca i roku -->
-              <input id="card-expiry-date" type="month" min="" value="" required>
+
+              <input id="card-expiry-date" type="month" required>
               <div class="error-message"></div>
             </div>
 
@@ -207,7 +208,7 @@
     <section class="thank-you section" hidden>
       <div class="card thank-you-card container">
         <div class="card__img">
-          <img src="images/illustration-hero.svg" alt="cartoon figure with headphones on their head dancing to music from a phone held in one hand with an outline of a city and music notes in the background" />
+          <img src="images/illustration-hero.svg" alt="cartoon figure with headphones on their head dancing to music from a phone held in one hand with an outline of a city and music notes in the background">
         </div>
         <div class="card__content flow">
           <header class="flow">
