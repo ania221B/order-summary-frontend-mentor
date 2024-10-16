@@ -73,46 +73,81 @@ function createPlanDetails (selectedPlan) {
  * @param {HTMLElement} button button clicled by user
  */
 function switchScreen (button) {
-  sections.forEach(section => section.setAttribute('hidden', true))
-
-  if (button.classList.contains('jsSubscribeBtn')) {
-    confirmation.removeAttribute('hidden')
-  }
-  if (button.classList.contains('jsChangeBtn')) {
-    subscriptions.removeAttribute('hidden')
-  }
-
-  if (button.classList.contains('jsPaymentBtn')) {
-    payment.removeAttribute('hidden')
-  }
-
-  if (button.classList.contains('jsCancelBtn')) {
-    cancellation.removeAttribute('hidden')
-    if (button.closest('.section').classList.contains('payment')) {
-      form.querySelectorAll('input').forEach(input => {
-        clearError(input)
-      })
-
-      resetForm()
-    }
-  }
-
-  if (button.classList.contains('jsHomeBtn')) {
-    subscriptions.removeAttribute('hidden')
-  }
-
   if (
-    button.classList.contains('jsOrderBtn') &&
-    button.closest('.section').classList.contains('form-valid')
-  ) {
-    thankYou.removeAttribute('hidden')
-    resetForm()
-  } else if (
     button.classList.contains('jsOrderBtn') &&
     button.closest('.section').classList.contains('form-invalid')
   ) {
-    payment.removeAttribute('hidden')
+    document.body.removeAttribute('data-state')
+  } else if (
+    button.classList.contains('jsOrderBtn') &&
+    button.closest('.section').classList.contains('form-valid')
+  ) {
+    document.body.setAttribute('data-state', 'hide-screen')
+  } else {
+    document.body.setAttribute('data-state', 'hide-screen')
   }
+
+  document.body.addEventListener('animationend', e => {
+    if (e.animationName === 'hideScreen') {
+      sections.forEach(section => section.setAttribute('hidden', true))
+
+      if (button.classList.contains('jsSubscribeBtn')) {
+        confirmation.removeAttribute('hidden')
+      }
+      if (button.classList.contains('jsChangeBtn')) {
+        subscriptions.removeAttribute('hidden')
+      }
+
+      if (button.classList.contains('jsPaymentBtn')) {
+        payment.removeAttribute('hidden')
+      }
+
+      if (button.classList.contains('jsCancelBtn')) {
+        cancellation.removeAttribute('hidden')
+        if (button.closest('.section').classList.contains('payment')) {
+          form.querySelectorAll('input').forEach(input => {
+            clearError(input)
+          })
+
+          resetForm()
+        }
+      }
+
+      if (button.classList.contains('jsHomeBtn')) {
+        subscriptions.removeAttribute('hidden')
+      }
+
+      if (
+        button.classList.contains('jsOrderBtn') &&
+        button.closest('.section').classList.contains('form-valid')
+      ) {
+        const time = getComputedStyle(
+          document.body,
+          '::before'
+        ).animationDuration
+        thankYou.removeAttribute('hidden')
+
+        setTimeout(() => {
+          form.querySelectorAll('input').forEach(input => {
+            clearError(input)
+          })
+
+          resetForm()
+        }, time)
+      } else if (
+        button.classList.contains('jsOrderBtn') &&
+        button.closest('.section').classList.contains('form-invalid')
+      ) {
+        payment.removeAttribute('hidden')
+      }
+
+      document.body.setAttribute('data-state', 'reveal-screen')
+    }
+
+    if (e.animationName === 'revealScreen') {
+      document.body.removeAttribute('data-state')
+    }
+  })
 }
 
 /**
@@ -161,7 +196,7 @@ function checkValidity (targetInput) {
 function checkValue (targetInput, min, max) {
   const targetInputWrapper = targetInput.parentElement
   const targetLabel = targetInputWrapper.querySelector('label').textContent
-  const value = targetInput.value.trim()
+  const value = targetInput.value.trim().split(' ').join('')
   if (!value) {
     return `Please provide ${targetLabel}`
   } else if (value.length < min) {
@@ -393,16 +428,18 @@ document.body.addEventListener('click', e => {
 
   if (e.target.closest('.jsOrderBtn')) {
     e.preventDefault()
+    const parentSection = form.closest('.section')
     const existingErrors = validateForm()
     const isFormValid = Object.values(existingErrors).every(isNull)
 
     if (isFormValid) {
-      form.closest('.section').classList.add('form-valid')
-      form.reset()
+      parentSection.classList.remove('form-invalid')
+      parentSection.classList.add('form-valid')
     } else {
       const errorArray = Object.entries(existingErrors)
 
-      form.closest('.section').classList.add('form-invalid')
+      parentSection.classList.remove('form-valid')
+      parentSection.classList.add('form-invalid')
 
       errorArray.forEach(item => {
         const [input, value] = item
