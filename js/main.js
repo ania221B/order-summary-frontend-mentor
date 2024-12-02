@@ -1,39 +1,42 @@
-const sections = document.querySelectorAll('.section')
-const subscriptions = document.querySelector('.subscriptions')
-const confirmation = document.querySelector('.confirmation')
-const cancellation = document.querySelector('.cancellation')
-const payment = document.querySelector('.payment')
-const thankYou = document.querySelector('.thank-you')
-const form = payment.querySelector('.payment__form')
+import {
+  capitalizeText,
+  checkDate,
+  isNull,
+  makeCamelCaseHyphenatedLowercase,
+  makeHyphenatedLowercaseCamelCase,
+  formatCardNumber
+} from './utils.js'
 
 /**
- * Capitalizes text
- * @param {String} text string of text to be capitalized
- * @returns {String} capitalized string of text
+ * Initializes DOM variables
+ * @returns {Object} object with all necessary DOM elements
  */
-function capitalizeText (text) {
-  const text1 = text.split(' ')
+export function initDOMElements () {
+  const sections = Array.from(document.querySelectorAll('.section'))
+  const subscriptions = document.querySelector('.subscriptions')
+  const confirmation = document.querySelector('.confirmation')
+  const cancellation = document.querySelector('.cancellation')
+  const payment = document.querySelector('.payment')
+  const thankYou = document.querySelector('.thank-you')
+  const form = document.querySelector('.payment__form')
 
-  const text2 = text1.map(item => {
-    if (item.includes('-')) {
-      return item
-        .split('-')
-        .map(item => item.substring(0, 1).toUpperCase() + item.substring(1))
-        .join('-')
-    }
-    return item
-  })
-
-  return text2
-    .map(item => item.substring(0, 1).toUpperCase() + item.substring(1))
-    .join(' ')
+  return {
+    sections,
+    subscriptions,
+    confirmation,
+    cancellation,
+    payment,
+    thankYou,
+    form
+  }
 }
+
 /**
  * Gets the type and price of the selected text
  * @param {HTMLElement} button 'subscribe' button clicked by the user
  * @returns {Object} object with details of the plan selected by user
  */
-function getSelectedPlan (button) {
+export function getSelectedPlan (button) {
   const cardContent = button.parentElement
   const planType = cardContent.querySelector('.jsPlanType').textContent.trim()
   const planPrice = cardContent.querySelector('.jsPrice').textContent.trim()
@@ -47,7 +50,8 @@ function getSelectedPlan (button) {
  * Creates HTMLElement with plan details and inserts it into DOM
  * @param {Object} selectedPlan object with type and price selected by the user
  */
-function createPlanDetails (selectedPlan) {
+export function createPlanDetails (selectedPlan) {
+  const { confirmation } = initDOMElements()
   const confirmationCard = confirmation.querySelector('.confirmation-card')
   const { type, price } = selectedPlan
   const planInfo = document.createElement('div')
@@ -72,7 +76,7 @@ function createPlanDetails (selectedPlan) {
  * Displays appropriate screen depending on button clicked by user
  * @param {HTMLElement} button button clicled by user
  */
-function switchScreen (button) {
+export function switchScreen (button) {
   if (
     button.classList.contains('jsOrderBtn') &&
     button.closest('.section').classList.contains('form-invalid')
@@ -89,6 +93,15 @@ function switchScreen (button) {
 
   document.body.addEventListener('animationend', e => {
     if (e.animationName === 'hideScreen') {
+      const {
+        sections,
+        confirmation,
+        subscriptions,
+        payment,
+        cancellation,
+        thankYou,
+        form
+      } = initDOMElements()
       sections.forEach(section => section.setAttribute('hidden', true))
 
       if (button.classList.contains('jsSubscribeBtn')) {
@@ -153,7 +166,8 @@ function switchScreen (button) {
 /**
  * Sets 'min' and 'value' attributes for card expiry date input
  */
-function setMinDate () {
+export function setMinDate () {
+  const { form } = initDOMElements()
   const expiryInput = form.querySelector('#card-expiry-date')
   const currentDate = new Date()
   const currentYear = currentDate.getFullYear()
@@ -168,21 +182,21 @@ function setMinDate () {
  * Sets attribute to indicate that input has been validated and is valid
  * @param {HTMLElement} targetInput input to mark
  */
-function markAsValid (targetInput) {
+export function markAsValid (targetInput) {
   targetInput.setAttribute('data-valid', 'true')
 }
 /**
  * Sets attribute to indicate that input has been validated and is invalid
  * @param {HTMLElement} targetInput input to mark
  */
-function markAsInvalid (targetInput) {
+export function markAsInvalid (targetInput) {
   targetInput.setAttribute('data-valid', 'false')
 }
 /**
  * Checks if the input has already been validated
  * @param {HTMLElement} targetInput input to check
  */
-function checkValidity (targetInput) {
+export function checkValidity (targetInput) {
   return targetInput.getAttribute('data-valid') === 'true'
 }
 
@@ -193,10 +207,18 @@ function checkValidity (targetInput) {
  * @param {Number} max maximum length value
  * @returns {String} error message if checks aren't passed or null if otherwise
  */
-function checkValue (targetInput, min, max) {
+export function checkValue (targetInput) {
   const targetInputWrapper = targetInput.parentElement
   const targetLabel = targetInputWrapper.querySelector('label').textContent
   const value = targetInput.value.trim().split(' ').join('')
+  const min = targetInput.getAttribute('minlength')
+  const max = targetInput.getAttribute('maxlength')
+  if (!min) {
+    throw new Error('Please provide the input with minlength attribute')
+  }
+  if (!max) {
+    throw new Error('Please provide the input with maxlength attribute')
+  }
   if (!value) {
     return `Please provide ${targetLabel}`
   } else if (value.length < min) {
@@ -209,31 +231,13 @@ function checkValue (targetInput, min, max) {
 }
 
 /**
- * Checks if date is grater than current month
- * @param {String} date hyphenated date to check
- * @returns {Boolean}
- */
-function checkDate (date) {
-  const currentDate = new Date()
-  const currentYear = currentDate.getFullYear()
-  const currentMonth = currentDate.getMonth() + 1
-  const [yearToCheck, monthToCheck] = date
-    .split('-')
-    .map(item => parseInt(item))
-
-  return (
-    yearToCheck > currentYear ||
-    (yearToCheck === currentYear && monthToCheck >= currentMonth)
-  )
-}
-
-/**
  * Checks card number value
  * @returns {String} error messsage or null
  */
-function validateCardNumber () {
+export function validateCardNumber () {
+  const { form } = initDOMElements()
   const cardNumber = form.querySelector('#card-number')
-  const isLengthOK = checkValue(cardNumber, 13, 19)
+  const isLengthOK = checkValue(cardNumber)
 
   if (isLengthOK) {
     return isLengthOK
@@ -245,8 +249,9 @@ function validateCardNumber () {
  * Checks card holder name value
  * @returns {String} error messsage or null
  */
-function validateHolderName () {
+export function validateHolderName () {
   const namePattern = /^[\p{L}-]+\s[\p{L}\-\s']{2,}$/u
+  const { form } = initDOMElements()
   const cardHolderName = form.querySelector('#card-holder-name').value.trim()
   if (!cardHolderName) {
     return 'Please provide name on card'
@@ -260,7 +265,8 @@ function validateHolderName () {
  * Checks card expiry date value
  * @returns {String} error messsage or null
  */
-function validateExpiryDate () {
+export function validateExpiryDate () {
+  const { form } = initDOMElements()
   const cardExpiryDate = form.querySelector('#card-expiry-date').value.trim()
   const isDateFuture = checkDate(cardExpiryDate)
   if (!cardExpiryDate) {
@@ -276,11 +282,12 @@ function validateExpiryDate () {
  * Checks card verification code value
  * @returns {String} error messsage or null
  */
-function validateCardCode () {
+export function validateCardCode () {
+  const { form } = initDOMElements()
   const cardCode = form.querySelector('#card-code')
   const cardCodeValue = cardCode.value.trim()
   const cardNumberValue = form.querySelector('#card-number').value.trim()
-  const isLengthOK = checkValue(cardCode, 3, 4)
+  const isLengthOK = checkValue(cardCode)
 
   if (isLengthOK) {
     return isLengthOK
@@ -300,7 +307,7 @@ function validateCardCode () {
  * Checks if form inputs were correctly filled in
  * @returns {Object} errors object containing error messages for invalid inputs
  */
-function validateForm () {
+export function validateForm () {
   const errors = {
     cardNumber: validateCardNumber(),
     cardHolderName: validateHolderName(),
@@ -313,7 +320,8 @@ function validateForm () {
 /**
  * Resets form and removes any classes indicating its validity
  */
-function resetForm () {
+export function resetForm () {
+  const { form } = initDOMElements()
   form.closest('.section').classList.remove('form-valid')
   form.closest('.section').classList.remove('form-invalid')
   form.reset()
@@ -324,7 +332,7 @@ function resetForm () {
  * @param {HTMLElement} targetControl form input that was incorrectly filled in
  * @param {String} errorMessage error message for incorrectly fille in form input
  */
-function createError (targetControl, errorMessage) {
+export function createError (targetControl, errorMessage) {
   const targetControlWrapper = targetControl.parentElement
   const targetError = targetControlWrapper.querySelector('.error-message')
   targetControlWrapper.classList.add('error')
@@ -348,77 +356,88 @@ function createError (targetControl, errorMessage) {
  * Removes error icon, text and class
  * @param {HTMLElement} targetControl active form input
  */
-function clearError (targetControl) {
+export function clearError (targetControl) {
   const targetControlWrapper = targetControl.parentElement
   const targetError = targetControlWrapper.querySelector('.error-message')
-  if (targetError.textContent) {
+  if (targetError && targetError.textContent) {
     targetError.innerHTML = ''
     targetControlWrapper.classList.remove('error')
   }
 }
 
 /**
- * Converts hyphenated lowercase text to camelCase text
- * @param {String} text string to convert
- * @returns {String} converted string
+ * Handles form input events
+ * Checks if form data is valid
+ * If data is valid, clears errors
+ * @param {Event} e event object of the input event triggered by form interaction
  */
-function makeCamelCaseHyphenatedLowercase (text) {
-  return text
-    .split(/(?=[A-Z])/)
-    .map(item => item.toLowerCase())
-    .join('-')
+export function handleFormInput (e) {
+  if (!e.target.closest('input')) return
+  const isInputValid = checkValidity(e.target)
+
+  if (isInputValid) return
+
+  let error = ''
+  const inputName = makeHyphenatedLowercaseCamelCase(e.target.id)
+
+  if (inputName === 'cardNumber') {
+    error = validateCardNumber()
+  }
+  if (inputName === 'cardHolderName') {
+    error = validateHolderName()
+  }
+  if (inputName === 'cardExpiryDate') {
+    error = validateExpiryDate()
+  }
+  if (inputName === 'cardCode') {
+    error = validateCardCode()
+  }
+
+  if (!error) {
+    clearError(e.target)
+    markAsValid(e.target)
+  }
 }
 
 /**
- * Converts camelCase text to hyphenated lowercase text
- * @param {String} text string to convert
- * @returns {String} converted string
+ * Handles form data changes by checking validity and formatting data
+ * @param {*} e event object of the change event triggered by form interaction
+ * @returns
  */
-function makeHyphenatedLowercaseCamelCase (text) {
-  return text
-    .split('-')
-    .map((item, index) => {
-      if (index === 0) {
-        return item
-      }
-      return item.substring(0, 1).toUpperCase() + item.substring(1)
-    })
-    .join('')
+export function handleFormChange (e) {
+  if (!e.target.closest('input')) return
+
+  if (e.target.closest('#card-expiry-date')) {
+    const isInputValid = checkValidity(e.target)
+    if (isInputValid) return
+
+    const error = validateExpiryDate()
+
+    if (!error) {
+      clearError(e.target)
+      markAsValid(e.target)
+    }
+  }
+
+  if (e.target.closest('#card-holder-name')) {
+    e.target.value = capitalizeText(e.target.value)
+  }
+
+  if (e.target.closest('#card-number')) {
+    e.target.value = formatCardNumber(e.target.value)
+  }
 }
 
-/**
- * Checks if string is an empty one
- * @param {String} currentValue string to check
- * @returns {Boolean}
- */
-function isNull (currentValue) {
-  return currentValue === null
-}
-
-/**
- * Group card number digits into groups of four
- * @param {String} cardNumber card number to format
- * @returns {String} grouped string
- */
-function formatCardNumber (cardNumber) {
-  return [...cardNumber]
-    .reduce((groups, item) => {
-      const lastGroup = groups[groups.length - 1]
-      if (!lastGroup || lastGroup.length === 4) {
-        groups.push([item])
-      } else {
-        lastGroup.push(item)
-      }
-      return groups
-    }, [])
-    .map(item => item.join(''))
-    .join(' ')
-}
-
-window.addEventListener('load', e => {
+document.addEventListener('DOMContentLoaded', () => {
+  const { form } = initDOMElements()
   setMinDate()
+
+  form.addEventListener('input', handleFormInput)
+  form.addEventListener('change', handleFormChange)
 })
+
 document.body.addEventListener('click', e => {
+  const { form } = initDOMElements()
   if (!e.target.closest('.jsBtn')) return
 
   if (e.target.closest('.jsSubscribeBtn')) {
@@ -455,57 +474,4 @@ document.body.addEventListener('click', e => {
   }
 
   switchScreen(e.target)
-})
-
-form.addEventListener('input', e => {
-  if (!e.target.closest('input')) return
-
-  const isInputValid = checkValidity(e.target)
-
-  if (isInputValid) return
-
-  let error = ''
-  const inputName = makeHyphenatedLowercaseCamelCase(e.target.id)
-
-  if (inputName === 'cardNumber') {
-    error = validateCardNumber()
-  }
-  if (inputName === 'cardHolderName') {
-    error = validateHolderName()
-  }
-  if (inputName === 'cardExpiryDate') {
-    error = validateExpiryDate()
-  }
-  if (inputName === 'cardCode') {
-    error = validateCardCode()
-  }
-
-  if (!error) {
-    clearError(e.target)
-    markAsValid(e.target)
-  }
-})
-
-form.addEventListener('change', e => {
-  if (!e.target.closest('input')) return
-
-  if (e.target.closest('#card-expiry-date')) {
-    const isInputValid = checkValidity(e.target)
-    if (isInputValid) return
-
-    const error = validateCardCode()
-
-    if (!error) {
-      clearError(e.target)
-      markAsValid(e.target)
-    }
-  }
-
-  if (e.target.closest('#card-holder-name')) {
-    e.target.value = capitalizeText(e.target.value)
-  }
-
-  if (e.target.closest('#card-number')) {
-    e.target.value = formatCardNumber(e.target.value)
-  }
 })
