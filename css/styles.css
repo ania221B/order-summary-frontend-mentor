@@ -90,7 +90,7 @@ body[data-state='hide-screen']::before {
 
 body[data-state='reveal-screen']::before {
   animation-name: revealScreen;
-  animation-timing-function: (0.51, 0.87, 0.47, 0.14);
+  animation-timing-function: cubic-bezier(0.51, 0.87, 0.47, 0.14);
 }
 
 @keyframes hideScreen {
