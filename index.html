@@ -18,12 +18,13 @@
   <title>Frontend Mentor | Order summary card</title>
 
   <script src="js/polyfill.js" defer></script>
-  <script src="js/main.js" defer></script>
+  <script type="module" src="js/utils.js" defer></script>
+  <script type="module" src="js/main.js" defer></script>
 </head>
 
 <body>
   <main>
-    <section class="subscriptions section">
+    <section id="subscription-section" class="subscriptions section">
       <div class="container">
         <div class="cards grid-auto-fit">
           <div class="card">
@@ -108,7 +109,7 @@
     </section>
 
 
-    <section class="confirmation section" hidden>
+    <section id='confirmation-section' class="confirmation section" hidden>
       <div class="card confirmation-card container">
         <div class="card__img">
           <img src="images/illustration-hero.svg" alt="cartoon figure with headphones on their head dancing to music from a phone held in one hand with an outline of a city and music notes in the background">
@@ -139,7 +140,7 @@
     </section>
 
 
-    <section class="cancellation section" hidden>
+    <section id="cancellation-section" class="cancellation section" hidden>
       <div class="card cancellation-card container">
         <div class="card__img">
           <img src="images/illustration-hero.svg" alt="cartoon figure with headphones on their head dancing to music from a phone held in one hand with an outline of a city and music notes in the background">
@@ -159,7 +160,7 @@
       </div>
     </section>
 
-    <section class="payment section" hidden>
+    <section id="payment-section" class="payment section" hidden>
       <div class="card payment-card container">
         <div class="card__img">
           <img src="images/illustration-hero.svg" alt="cartoon figure with headphones on their head dancing to music from a phone held in one hand with an outline of a city and music notes in the background">
@@ -181,14 +182,13 @@
 
             <div class="form__control-wrapper">
               <label for="card-expiry-date">Expiry:</label>
-
               <input id="card-expiry-date" type="month" required>
               <div class="error-message"></div>
             </div>
 
             <div class="form__control-wrapper">
               <label for="card-code">CVV:</label>
-              <input id="card-code" type="text" pattern="\d{3,4}" placeholder="CVV" required>
+              <input id="card-code" type="text" minlength="3" maxlength="4" pattern="\d{3,4}" placeholder="CVV" required>
               <div class="error-message"></div>
             </div>
 
@@ -205,7 +205,7 @@
       </div>
     </section>
 
-    <section class="thank-you section" hidden>
+    <section id="thank-you-section" class="thank-you section" hidden>
       <div class="card thank-you-card container">
         <div class="card__img">
           <img src="images/illustration-hero.svg" alt="cartoon figure with headphones on their head dancing to music from a phone held in one hand with an outline of a city and music notes in the background">
