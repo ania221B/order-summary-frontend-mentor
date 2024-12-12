@@ -24,11 +24,11 @@ describe('validateExpiryDate', () => {
     cardExpiryDateInput = document.body.querySelector('#card-expiry-date')
     currentDate = new Date()
     currentYear = currentDate.getFullYear()
-    currentMonth = currentDate.getMonth()
+    currentMonth = currentDate.getMonth() + 1
   })
 
   test('returns null if date is valid', () => {
-    const selectedMonth = (currentMonth + 2).toString().padStart(2, '0')
+    const selectedMonth = currentMonth.toString().padStart(2, '0')
     const selectedYear = currentDate.getFullYear()
     const selectedDate = `${selectedYear}-${selectedMonth}`
 
@@ -40,7 +40,7 @@ describe('validateExpiryDate', () => {
     expect(validateExpiryDate()).toBe('Please provide card expiry date')
   })
   test('returns correct error message when expiry date is invalid', () => {
-    const selectedMonth = (currentMonth - 2).toString().padStart(2, '0')
+    const selectedMonth = currentMonth.toString().padStart(2, '0')
     const selectedYear = currentDate.getFullYear() - 2
     const selectedDate = `${selectedYear}-${selectedMonth}`
     cardExpiryDateInput.value = selectedDate
