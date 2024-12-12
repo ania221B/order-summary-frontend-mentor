@@ -75,7 +75,7 @@ describe('resetForm', () => {
     cardNumberInput.value = '123'
     cardHolderNameInput.value = 'An'
     cardExpiryDateInput.value = `${currentDate.getFullYear() - 1}-${(
-      currentDate.getMonth + 1
+      currentDate.getMonth() + 1
     )
       .toString()
       .padStart(2, '0')}`
@@ -92,7 +92,7 @@ describe('resetForm', () => {
     cardNumberInput.value = '1234567890123'
     cardHolderNameInput.value = 'An'
     cardExpiryDateInput.value = `${currentDate.getFullYear()}-${(
-      currentDate.getMonth + 1
+      currentDate.getMonth() + 1
     )
       .toString()
       .padStart(2, '0')}`
