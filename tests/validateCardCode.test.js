@@ -1,4 +1,3 @@
-import { validate } from 'jest-validate'
 import { validateCardCode } from '../js/main'
 
 describe('validateCardCode', () => {
