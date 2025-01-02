@@ -50,20 +50,28 @@ describe('capitalizeText', () => {
 })
 
 describe('checkDate', () => {
+  beforeAll(() => {
+    jest.useFakeTimers()
+    jest.setSystemTime(new Date(2025, 11, 7))
+  })
+
+  afterAll(() => {
+    jest.useRealTimers()
+  })
   function generateDate (yearOffset = 0, monthOffset = 0) {
     const currentDate = new Date()
-    const year = currentDate.getFullYear() + yearOffset
     let month = currentDate.getMonth() + 1 + monthOffset
 
     if (month > 12) {
-      month -= 12
+      mont -= 12
       yearOffset++
     } else if (month < 1) {
       month += 12
       yearOffset--
     }
+    const year = currentDate.getFullYear() + yearOffset
 
-    return `${year}-${month.toString().padStart(2, '0')}`
+    return `${year}-${month}`
   }
 
   test('returns true for a future date', () => {
