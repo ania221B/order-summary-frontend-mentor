@@ -210,6 +210,11 @@ export function checkValidity (targetInput) {
 export function checkValue (targetInput) {
   const targetInputWrapper = targetInput.parentElement
   const targetLabel = targetInputWrapper.querySelector('label').textContent
+  const labelText =
+    targetInput.id === 'card-code'
+      ? targetLabel.slice(0, targetLabel.length - 1)
+      : targetLabel.slice(0, 1).toUpperCase() +
+        targetLabel.slice(1, targetLabel.length - 1).toLowerCase()
   const value = targetInput.value.trim().split(' ').join('')
   const min = targetInput.getAttribute('minlength')
   const max = targetInput.getAttribute('maxlength')
@@ -220,11 +225,13 @@ export function checkValue (targetInput) {
     throw new Error('Please provide the input with maxlength attribute')
   }
   if (!value) {
-    return `Please provide ${targetLabel}`
+    return `Please provide ${
+      targetInput.id === 'card-code' ? labelText : labelText.toLowerCase()
+    }`
   } else if (value.length < min) {
-    return `${targetLabel} must have at least ${min} digits`
+    return `${labelText} must have at least ${min} digits`
   } else if (value.length > max) {
-    return `${targetLabel} must have at most ${max} digits`
+    return ` ${labelText} must have at most ${max} digits`
   } else {
     return null
   }
@@ -253,8 +260,12 @@ export function validateHolderName () {
   const namePattern = /^[\p{L}-]+\s[\p{L}\-\s']{2,}$/u
   const { form } = initDOMElements()
   const cardHolderName = form.querySelector('#card-holder-name').value.trim()
+  const targetLabel = form
+    .querySelector('#card-holder-name')
+    .parentElement.querySelector('label').textContent
+  const labelText = targetLabel.slice(0, targetLabel.length - 1).toLowerCase()
   if (!cardHolderName) {
-    return 'Please provide name on card'
+    return `Please provide ${labelText}`
   } else if (!cardHolderName.match(namePattern)) {
     return 'Use letters & hyphens for name & surname'
   }
