@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">92.89% </span>
+                <span class="strong">93.06% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>183/197</span>
+                <span class='fraction'>188/202</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">85.29% </span>
+                <span class="strong">85.84% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>87/102</span>
+                <span class='fraction'>91/106</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">94.24% </span>
+                <span class="strong">94.38% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>180/191</span>
+                <span class='fraction'>185/196</span>
             </div>
         
             
@@ -540,7 +540,22 @@
 <a name='L475'></a><a href='#L475'>475</a>
 <a name='L476'></a><a href='#L476'>476</a>
 <a name='L477'></a><a href='#L477'>477</a>
-<a name='L478'></a><a href='#L478'>478</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L478'></a><a href='#L478'>478</a>
+<a name='L479'></a><a href='#L479'>479</a>
+<a name='L480'></a><a href='#L480'>480</a>
+<a name='L481'></a><a href='#L481'>481</a>
+<a name='L482'></a><a href='#L482'>482</a>
+<a name='L483'></a><a href='#L483'>483</a>
+<a name='L484'></a><a href='#L484'>484</a>
+<a name='L485'></a><a href='#L485'>485</a>
+<a name='L486'></a><a href='#L486'>486</a>
+<a name='L487'></a><a href='#L487'>487</a>
+<a name='L488'></a><a href='#L488'>488</a>
+<a name='L489'></a><a href='#L489'>489</a>
+<a name='L490'></a><a href='#L490'>490</a>
+<a name='L491'></a><a href='#L491'>491</a>
+<a name='L492'></a><a href='#L492'>492</a>
+<a name='L493'></a><a href='#L493'>493</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -752,6 +767,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">31x</span>
 <span class="cline-any cline-yes">31x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">31x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">31x</span>
 <span class="cline-any cline-yes">31x</span>
 <span class="cline-any cline-yes">31x</span>
@@ -763,6 +783,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">29x</span>
 <span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">26x</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">20x</span>
@@ -796,6 +818,10 @@
 <span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-yes">2x</span>
@@ -827,6 +853,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-yes">12x</span>
@@ -1229,6 +1259,11 @@ export function checkValidity (targetInput) {
 export function checkValue (targetInput) {
   const targetInputWrapper = targetInput.parentElement
   const targetLabel = targetInputWrapper.querySelector('label').textContent
+  const labelText =
+    targetInput.id === 'card-code'
+      ? targetLabel.slice(0, targetLabel.length - 1)
+      : targetLabel.slice(0, 1).toUpperCase() +
+        targetLabel.slice(1, targetLabel.length - 1).toLowerCase()
   const value = targetInput.value.trim().split(' ').join('')
   const min = targetInput.getAttribute('minlength')
   const max = targetInput.getAttribute('maxlength')
@@ -1239,11 +1274,13 @@ export function checkValue (targetInput) {
     throw new Error('Please provide the input with maxlength attribute')
   }
   if (!value) {
-    return `Please provide ${targetLabel}`
+    return `Please provide ${
+      targetInput.id === 'card-code' ? labelText : labelText.toLowerCase()
+    }`
   } else if (value.length &lt; min) {
-    return `${targetLabel} must have at least ${min} digits`
+    return `${labelText} must have at least ${min} digits`
   } else if (value.length &gt; max) {
-    return `${targetLabel} must have at most ${max} digits`
+    return `${labelText} must have at most ${max} digits`
   } else {
     return null
   }
@@ -1272,8 +1309,12 @@ export function validateHolderName () {
   const namePattern = /^[\p{L}-]+\s[\p{L}\-\s']{2,}$/u
   const { form } = initDOMElements()
   const cardHolderName = form.querySelector('#card-holder-name').value.trim()
+  const targetLabel = form
+    .querySelector('#card-holder-name')
+    .parentElement.querySelector('label').textContent
+  const labelText = targetLabel.slice(0, targetLabel.length - 1).toLowerCase()
   if (!cardHolderName) {
-    return 'Please provide name on card'
+    return `Please provide ${labelText}`
   } else if (!cardHolderName.match(namePattern)) {
     return 'Use letters &amp; hyphens for name &amp; surname'
   }
@@ -1305,6 +1346,10 @@ export function validateCardCode () {
   const { form } = initDOMElements()
   const cardCode = form.querySelector('#card-code')
   const cardCodeValue = cardCode.value.trim()
+  const cardCodeLabel =
+    cardCode.parentElement.querySelector('label').textContent
+&nbsp;
+  const cardCodeLabelText = cardCodeLabel.slice(0, cardCodeLabel.length - 1)
   const cardNumberValue = form.querySelector('#card-number').value.trim()
   const isLengthOK = checkValue(cardCode)
 &nbsp;
@@ -1316,7 +1361,7 @@ export function validateCardCode () {
     cardNumberValue.substring(0, 2) === '37'
   ) {
     <span class="missing-if-branch" title="else path not taken" >E</span>if (cardCodeValue.length &lt; 4) {
-      return 'Card code must be 4 digits'
+      return `${cardCodeLabelText} must be 4 digits`
     }
   }
   return null
@@ -1501,7 +1546,7 @@ document.body.addEventListener('click', e =&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-01-02T16:23:22.323Z
+                at 2025-01-04T17:51:50.068Z
             </div>
         <script src="prettify.js"></script>
         <script>
