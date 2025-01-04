@@ -1,3 +1,24 @@
+/* ===== FONTS ===== */
+
+@font-face {
+  font-family: 'Red Hat Display';
+  font-weight: 500;
+  src: url('/assets/fonts/redhatdisplay-medium-webfont.woff2') format('woff2'),
+    url('/assets/fonts/redhatdisplay-medium-webfont.woff') format('woff');
+}
+@font-face {
+  font-family: 'Red Hat Display';
+  font-weight: 700;
+  src: url('/assets/fonts/redhatdisplay-bold-webfont.woff2') format('woff2'),
+    url('/assets/fonts/redhatdisplay-bold-webfont.woff') format('woff');
+}
+@font-face {
+  font-family: 'Red Hat Display';
+  font-weight: 900;
+  src: url('/assets/fonts/redhatdisplay-black-webfont.woff2') format('woff2'),
+    url('/assets/fonts/redhatdisplay-black-webfont.woff') format('woff');
+}
+
 /* ===== CUSTOM PROPERTIES ===== */
 
 :root {
@@ -6,6 +27,7 @@
   --fs-300: 0.875rem;
   --fs-400: 1rem;
   --fs-500: 1.75rem;
+  --fs-600: 2rem;
 
   --fw-500: 500;
   --fw-700: 700;
@@ -16,7 +38,7 @@
   --clr-primary-100: hsl(225, 100%, 98%);
   --clr-primary-200: hsl(224, 23%, 85%);
   --clr-primary-300: hsla(224, 23%, 55%, 0.3);
-  --clr-primary-700: hsl(224, 23%, 55%);
+  --clr-primary-700: hsl(224, 23%, 50%);
   --clr-primary-900: hsl(223, 47%, 23%);
 
   --clr-secondary-100: hsl(225, 100%, 94%);
@@ -33,7 +55,7 @@
   --button-padding-inline: 2em;
   --button-shadow: var(--clr-secondary-300);
 
-  --content-padding: 4em;
+  --content-padding: 1.5em;
 
   --card-base-width: 20rem;
   --card-max-width: 28rem;
@@ -53,7 +75,7 @@ body {
   font-weight: var(--fw-500);
   color: var(--clr-primary-700);
   background-color: var(--clr-secondary-100);
-  background-image: url('../images/pattern-background-mobile.svg');
+  background-image: url('../assets/images/pattern-background-mobile.svg');
   background-repeat: no-repeat;
   background-size: 100dvw;
 
@@ -63,12 +85,11 @@ body {
   align-content: center;
 
   isolation: isolate;
-  overflow: hidden;
 }
 
 body[data-state]::before {
   content: '';
-  position: absolute;
+  position: fixed;
   top: 0;
   transform: scale(0, 0);
   aspect-ratio: 1;
@@ -117,14 +138,14 @@ body[data-state='reveal-screen']::before {
     background-image: url(../images/pattern-background-desktop.svg);
   }
   body[data-state]::before {
-    animation-duration: 1250ms;
+    animation-duration: 1350ms;
   }
 }
 
 main {
   grid-row: 1;
   align-self: center;
-  padding-block-start: var(--content-padding);
+  padding-block: var(--content-padding);
 }
 
 button {
@@ -143,10 +164,20 @@ footer {
 
 /* ===== TYPOGRAPHY ===== */
 
+.h1,
 .h2,
 .h3 {
   font-weight: var(--fw-900);
   color: var(--clr-primary-900);
+}
+
+.h1 {
+  font-size: var(--fs-600);
+  text-align: center;
+}
+
+.h1 span {
+  color: var(--clr-secondary-400);
 }
 
 .h2 {
@@ -190,6 +221,10 @@ footer {
 
 .flow > * + * {
   margin-top: var(--flow-spacer, 1.25em);
+}
+
+.margin-xl {
+  margin-top: 2em;
 }
 
 .divider {
