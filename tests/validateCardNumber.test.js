@@ -3,6 +3,7 @@ import { validateCardNumber } from '../js/main'
 describe('validateCardNumber', () => {
   let cardNumberInput
   let cardNumberLabel
+  let cardNumberLabelText
   beforeEach(() => {
     document.body.innerHTML = `<main>
       <section id="payment-section" class="payment section" hidden>
@@ -25,6 +26,9 @@ describe('validateCardNumber', () => {
     cardNumberInput = document.querySelector('#card-number')
     cardNumberLabel =
       cardNumberInput.parentElement.querySelector('label').textContent
+    cardNumberLabelText =
+      cardNumberLabel.slice(0, 1).toUpperCase() +
+      cardNumberLabel.slice(1, cardNumberLabel.length - 1).toLowerCase()
   })
   test('returns null when card number is valid', () => {
     cardNumberInput.value = '1234567899517'
@@ -32,12 +36,14 @@ describe('validateCardNumber', () => {
   })
   test('returns correct error message when card number is missing', () => {
     cardNumberInput.value = ''
-    expect(validateCardNumber()).toBe(`Please provide ${cardNumberLabel}`)
+    expect(validateCardNumber()).toBe(
+      `Please provide ${cardNumberLabelText.toLowerCase()}`
+    )
   })
   test('returns correct error message when card number is too short', () => {
     cardNumberInput.value = '123'
     expect(validateCardNumber()).toBe(
-      `${cardNumberLabel} must have at least ${cardNumberInput.getAttribute(
+      `${cardNumberLabelText} must have at least ${cardNumberInput.getAttribute(
         'minlength'
       )} digits`
     )
@@ -45,7 +51,7 @@ describe('validateCardNumber', () => {
   test('returns correct error message when card number is too long', () => {
     cardNumberInput.value = '98745632114785236951753'
     expect(validateCardNumber()).toBe(
-      `${cardNumberLabel} must have at most ${cardNumberInput.getAttribute(
+      `${cardNumberLabelText} must have at most ${cardNumberInput.getAttribute(
         'maxlength'
       )} digits`
     )

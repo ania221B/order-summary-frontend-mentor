@@ -4,12 +4,14 @@ describe('validateForm', () => {
   let currentDate
   let cardNumberInput
   let cardNumberLabel
+  let cardNumberLabelText
   let cardNumberMin
   let cardNumberMax
   let cardHolderNameInput
   let cardExpiryDateInput
   let cardCodeInput
   let cardCodeLabel
+  let cardCodeLabelText
   let cardCodeMax
   beforeEach(() => {
     document.body.innerHTML = `<section id="payment-section" class="payment section" hidden>
@@ -51,6 +53,9 @@ describe('validateForm', () => {
     cardNumberInput = document.querySelector('#card-number')
     cardNumberLabel =
       cardNumberInput.parentElement.querySelector('label').textContent
+    cardNumberLabelText =
+      cardNumberLabel.slice(0, 1).toUpperCase() +
+      cardNumberLabel.slice(1, cardNumberLabel.length - 1).toLowerCase()
     cardNumberMin = cardNumberInput.getAttribute('minlength')
     cardNumberMax = cardNumberInput.getAttribute('maxlength')
     cardHolderNameInput = document.querySelector('#card-holder-name')
@@ -58,6 +63,7 @@ describe('validateForm', () => {
     cardCodeInput = document.querySelector('#card-code')
     cardCodeLabel =
       cardCodeInput.parentElement.querySelector('label').textContent
+    cardCodeLabelText = cardCodeLabel.slice(0, cardCodeLabel.length - 1)
     cardCodeMax = cardCodeInput.getAttribute('maxlength')
   })
 
@@ -89,10 +95,10 @@ describe('validateForm', () => {
     cardCodeInput.value = '12345'
 
     expect(validateForm()).toEqual({
-      cardNumber: `${cardNumberLabel} must have at least ${cardNumberMin} digits`,
+      cardNumber: `${cardNumberLabelText} must have at least ${cardNumberMin} digits`,
       cardHolderName: 'Use letters & hyphens for name & surname',
       cardExpiryDate: 'Must be current month or later',
-      cardCode: `${cardCodeLabel} must have at most ${cardCodeMax} digits`
+      cardCode: `${cardCodeLabelText} must have at most ${cardCodeMax} digits`
     })
   })
   test('returns an object with appropriate values when data entered is partially correct', () => {
@@ -106,10 +112,10 @@ describe('validateForm', () => {
     cardCodeInput.value = '123'
 
     expect(validateForm()).toEqual({
-      cardNumber: `${cardNumberLabel} must have at most ${cardNumberMax} digits`,
+      cardNumber: `${cardNumberLabelText} must have at most ${cardNumberMax} digits`,
       cardHolderName: null,
       cardExpiryDate: null,
-      cardCode: 'Card code must be 4 digits'
+      cardCode: `${cardCodeLabelText} must be 4 digits`
     })
   })
 })

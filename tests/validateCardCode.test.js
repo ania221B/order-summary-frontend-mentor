@@ -4,6 +4,7 @@ describe('validateCardCode', () => {
   let cardNumberInput
   let cardCodeInput
   let cardCodeLabel
+  let cardCodeLabelText
   let cardCodeMinLength
   let cardCodeMaxLength
 
@@ -36,6 +37,7 @@ describe('validateCardCode', () => {
     cardCodeInput = document.querySelector('#card-code')
     cardCodeLabel =
       cardCodeInput.parentElement.querySelector('label').textContent
+    cardCodeLabelText = cardCodeLabel.slice(0, cardCodeLabel.length - 1)
     cardCodeMinLength = cardCodeInput.getAttribute('minlength')
     cardCodeMaxLength = cardCodeInput.getAttribute('maxlength')
   })
@@ -48,23 +50,23 @@ describe('validateCardCode', () => {
   })
   test('returns correct error message when card code is missing', () => {
     cardCodeInput.value = ''
-    expect(validateCardCode()).toBe(`Please provide ${cardCodeLabel}`)
+    expect(validateCardCode()).toBe(`Please provide ${cardCodeLabelText}`)
   })
   test('returns correct error message when card code is too short', () => {
     cardCodeInput.value = '12'
     expect(validateCardCode()).toBe(
-      `${cardCodeLabel} must have at least ${cardCodeMinLength} digits`
+      `${cardCodeLabelText} must have at least ${cardCodeMinLength} digits`
     )
   })
   test('returns correct error message when card code is too long', () => {
     cardCodeInput.value = '12345'
     expect(validateCardCode()).toBe(
-      `${cardCodeLabel} must have at most ${cardCodeMaxLength} digits`
+      `${cardCodeLabelText} must have at most ${cardCodeMaxLength} digits`
     )
   })
   test('returns correct error message when card is American Express and card code has less than 4 digits', () => {
     cardNumberInput.value = '3712345678901'
     cardCodeInput.value = '123'
-    expect(validateCardCode()).toBe('Card code must be 4 digits')
+    expect(validateCardCode()).toBe(`${cardCodeLabelText} must be 4 digits`)
   })
 })

@@ -4,6 +4,7 @@ describe('checkValue', () => {
   let inputToCheck
   let inputToCheckWrapper
   let inputToCheckLabel
+  let labelText
   beforeEach(() => {
     document.body.innerHTML = `<main>
     <section id="payment-section" class="payment section form-invalid">
@@ -25,16 +26,21 @@ describe('checkValue', () => {
     inputToCheck = document.querySelector('#card-number')
     inputToCheckWrapper = inputToCheck.parentElement
     inputToCheckLabel = inputToCheckWrapper.querySelector('label').textContent
+    labelText =
+      inputToCheckLabel.slice(0, 1).toUpperCase() +
+      inputToCheckLabel.slice(1, inputToCheckLabel.length - 1).toLowerCase()
   })
 
   test('if there is no value returns error message asking to provide one', () => {
     inputToCheck.value = ''
-    expect(checkValue(inputToCheck)).toBe(`Please provide ${inputToCheckLabel}`)
+    expect(checkValue(inputToCheck)).toBe(
+      `Please provide ${labelText.toLowerCase()}`
+    )
   })
   test('if value is shorter than min allowed length returns a message informing about min value', () => {
     inputToCheck.value = '123654789'
     expect(checkValue(inputToCheck)).toBe(
-      `${inputToCheckLabel} must have at least ${inputToCheck.getAttribute(
+      `${labelText} must have at least ${inputToCheck.getAttribute(
         'minlength'
       )} digits`
     )
@@ -42,7 +48,7 @@ describe('checkValue', () => {
   test('if value is longer than max allowed length returns a message informing about max value', () => {
     inputToCheck.value = '123456789951357741963'
     expect(checkValue(inputToCheck)).toBe(
-      `${inputToCheckLabel} must have at most ${inputToCheck.getAttribute(
+      `${labelText} must have at most ${inputToCheck.getAttribute(
         'maxlength'
       )} digits`
     )

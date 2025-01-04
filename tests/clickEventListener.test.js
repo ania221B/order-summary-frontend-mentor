@@ -22,6 +22,7 @@ describe('clickEventListener', () => {
   let cardNumberInput
   let cardNumberWrapper
   let cardNumberLabel
+  let cardNumberLabelText
   let cardNumberMin
   let cardNumberErrorContainer
   let cardHolderNameInput
@@ -33,6 +34,7 @@ describe('clickEventListener', () => {
   let cardExpiryDateErrorContainer
   let cardCodeWrapper
   let cardCodeLabel
+  let cardCodeLabelText
   let cardCodeErrorContainer
 
   beforeEach(() => {
@@ -98,6 +100,9 @@ describe('clickEventListener', () => {
     cardNumberInput = form.querySelector('#card-number')
     cardNumberWrapper = cardNumberInput.parentElement
     cardNumberLabel = cardNumberWrapper.querySelector('label').textContent
+    cardNumberLabelText =
+      cardNumberLabel.slice(0, 1).toUpperCase() +
+      cardNumberLabel.slice(1, cardNumberLabel.length - 1).toLowerCase()
     cardNumberMin = cardNumberInput.getAttribute('minlength')
     cardNumberErrorContainer = cardNumberWrapper.querySelector('.error-message')
     cardHolderNameInput = form.querySelector('#card-holder-name')
@@ -111,6 +116,7 @@ describe('clickEventListener', () => {
     cardCodeInput = form.querySelector('#card-code')
     cardCodeWrapper = cardCodeInput.parentElement
     cardCodeLabel = cardCodeWrapper.querySelector('label').textContent
+    cardCodeLabelText = cardCodeLabel.slice(0, cardCodeLabel.length - 1)
     cardCodeErrorContainer = cardCodeWrapper.querySelector('.error-message')
   })
   afterEach(() => {
@@ -234,8 +240,8 @@ describe('clickEventListener', () => {
   })
   test('marks form as invalid when Order button is clicked after incorrectly filling in the form', () => {
     const cardCodeMin = cardCodeInput.getAttribute('minlength')
-    const cardNumberError = `${cardNumberLabel} must have at least ${cardNumberMin} digits`
-    const cardCodeError = `${cardCodeLabel} must have at least ${cardCodeMin} digits`
+    const cardNumberError = `${cardNumberLabelText} must have at least ${cardNumberMin} digits`
+    const cardCodeError = `${cardCodeLabelText} must have at least ${cardCodeMin} digits`
 
     const expectedCardNumberErrorContainerHTML = `<svg
       xmlns='http://www.w3.org/2000/svg'
@@ -310,7 +316,7 @@ describe('clickEventListener', () => {
   })
   test('marks a previously valid form as invalid when Order button is clicked after introducing errors to form', () => {
     const cardCodeMax = cardCodeInput.getAttribute('maxlength')
-    const cardCodeError = `${cardCodeLabel} must have at most ${cardCodeMax} digits`
+    const cardCodeError = `${cardCodeLabelText} must have at most ${cardCodeMax} digits`
     const expectedCardCodeErrorContainerHTML = `<svg
       xmlns='http://www.w3.org/2000/svg'
       width='20'

@@ -2,6 +2,8 @@ import { validateHolderName } from '../js/main'
 
 describe('validateHolderName', () => {
   let cardHolderNameInput
+  let cardHolderNameLabel
+  let labelText
   beforeEach(() => {
     document.body.innerHTML = `<main>
       <section id="payment-section" class="payment section" hidden>
@@ -22,6 +24,11 @@ describe('validateHolderName', () => {
       </section>
     </main>`
     cardHolderNameInput = document.querySelector('#card-holder-name')
+    cardHolderNameLabel =
+      cardHolderNameInput.parentElement.querySelector('label').textContent
+    labelText = cardHolderNameLabel
+      .slice(0, cardHolderNameLabel.length - 1)
+      .toLowerCase()
   })
   test('returns null when card holder name is valid', () => {
     cardHolderNameInput.value = 'Anna-Maria Kowalska'
@@ -29,7 +36,7 @@ describe('validateHolderName', () => {
   })
   test('returns correct error message when card holder name is missing', () => {
     cardHolderNameInput.value = ''
-    expect(validateHolderName()).toBe('Please provide name on card')
+    expect(validateHolderName()).toBe(`Please provide ${labelText}`)
   })
   test('returns correct error message when card holder name is invalid', () => {
     cardHolderNameInput.value = 'abc'
