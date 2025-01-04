@@ -4,32 +4,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Fake streaming service subscription options with form validation and multi-screen flow">
   <!-- displays site properly based on user's device -->
 
-  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@500;700;900&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets//images/favicon-32x32.png">
 
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/styles.css">
 
   <title>Frontend Mentor | Order summary card</title>
 
-  <script src="js/polyfill.js" defer></script>
-  <script type="module" src="js/utils.js" defer></script>
-  <script type="module" src="js/main.js" defer></script>
+  <script src="./js/polyfill.js" defer></script>
+  <script type="module" src="./js/utils.js" defer></script>
+  <script type="module" src="./js/main.js" defer></script>
 </head>
 
 <body>
   <main>
-    <section id="subscription-section" class="subscriptions section">
+    <section id="subscription-section" class="subscriptions section" aria-labelledby="subscription-screen">
       <div class="container">
-        <div class="cards grid-auto-fit">
+        <header>
+          <h1 id="subscription-screen" class="h1">Choose your <span>SoundSpace</span> plan</h1>
+        </header>
+        <div class="cards grid-auto-fit margin-xl">
           <div class="card">
             <div class="card__img">
-              <img src="images/illustration-hero.svg" alt="cartoon figure with headphones on their head dancing to music from a phone held in one hand with an outline of a city and music notes in the background">
+              <img src="assets/images/illustration-hero.svg" alt="cartoon figure with headphones on their head dancing to music from a phone held in one hand with an outline of a city and music notes in the background" width="450" height="220">
             </div>
             <div class="card__content card__content--subscription flow">
               <header class="flow">
@@ -46,14 +46,14 @@
               <ul>
                 <li>Stream on 1 device</li>
               </ul>
-              <button type="button" class="btn jsBtn jsSubscribeBtn" data-type="primary" data-theme="dark">
+              <button type="button" class="btn jsBtn jsSubscribeBtn" data-type="primary" data-theme="dark" aria-label="Subscribe to free plan">
                 Subscribe
               </button>
             </div>
           </div>
           <div class="card">
             <div class="card__img">
-              <img src="images/illustration-hero.svg" alt="cartoon figure with headphones on their head dancing to music from a phone held in one hand with an outline of a city and music notes in the background">
+              <img src="assets/images/illustration-hero.svg" alt="cartoon figure with headphones on their head dancing to music from a phone held in one hand with an outline of a city and music notes in the background" width="450" height="220">
             </div>
             <div class="card__content card__content--subscription flow">
               <header class="flow">
@@ -72,14 +72,14 @@
                 <li>View content offline</li>
                 <li>Listen to new content early</li>
               </ul>
-              <button type="button" class="btn jsBtn jsSubscribeBtn" data-type="primary" data-theme="dark">
+              <button type="button" class="btn jsBtn jsSubscribeBtn" data-type="primary" data-theme="dark" aria-label="Subscribe to monthly plan">
                 Subscribe
               </button>
             </div>
           </div>
           <div class="card">
             <div class="card__img">
-              <img src="images/illustration-hero.svg" alt="cartoon figure with headphones on their head dancing to music from a phone held in one hand with an outline of a city and music notes in the background">
+              <img src="assets/images/illustration-hero.svg" alt="cartoon figure with headphones on their head dancing to music from a phone held in one hand with an outline of a city and music notes in the background" width="450" height="220">
             </div>
             <div class="card__content card__content--subscription flow">
               <header class="flow">
@@ -99,7 +99,7 @@
                 <li>Listen to content early</li>
                 <li>Get exclusive discounts</li>
               </ul>
-              <button type="button" class="btn jsBtn jsSubscribeBtn" data-type="primary" data-theme="dark">
+              <button type="button" class="btn jsBtn jsSubscribeBtn" data-type="primary" data-theme="dark" aria-label="subscribe to annual plan">
                 Subscribe
               </button>
             </div>
@@ -109,23 +109,23 @@
     </section>
 
 
-    <section id='confirmation-section' class="confirmation section" hidden>
+    <section id='confirmation-section' class="confirmation section" aria-labelledby="confirmation-screen" hidden>
       <div class="card confirmation-card container">
         <div class="card__img">
-          <img src="images/illustration-hero.svg" alt="cartoon figure with headphones on their head dancing to music from a phone held in one hand with an outline of a city and music notes in the background">
+          <img src="assets/images/illustration-hero.svg" alt="cartoon figure with headphones on their head dancing to music from a phone held in one hand with an outline of a city and music notes in the background" width="450" height="220">
         </div>
         <div class="card__content flow">
           <header class="flow">
-            <h2 class="h2">Order Summary</h2>
+            <h2 id="confirmation-screen" class="h2">Order Summary</h2>
             <p>
               You can now listen to millions of songs, audiobooks, and podcasts
               on any device anywhere you like!
             </p>
           </header>
           <div class="plan">
-            <img src="images/icon-music.svg" alt="">
+            <img src="assets/images/icon-music.svg" alt="">
             <!-- plan details go here -->
-            <button type="button" class="btn jsBtn jsChangeBtn" data-type="primary" data-theme="link">
+            <button type="button" class="btn jsBtn jsChangeBtn" data-type="primary" data-theme="link" aria-label="Change your plan">
               Change
             </button>
           </div>
@@ -140,14 +140,14 @@
     </section>
 
 
-    <section id="cancellation-section" class="cancellation section" hidden>
+    <section id="cancellation-section" class="cancellation section" aria-labelledby="cancellation-screen" hidden>
       <div class="card cancellation-card container">
         <div class="card__img">
-          <img src="images/illustration-hero.svg" alt="cartoon figure with headphones on their head dancing to music from a phone held in one hand with an outline of a city and music notes in the background">
+          <img src="assets/images/illustration-hero.svg" alt="cartoon figure with headphones on their head dancing to music from a phone held in one hand with an outline of a city and music notes in the background" width="450" height="220">
         </div>
         <div class="card__content flow">
           <header class="flow">
-            <h2 class="h2">Order Cancelled</h2>
+            <h2 id="cancellation-screen" class="h2">Order Cancelled</h2>
             <p>
               Your order has been succesfully cancelled and we're sorry to see you go! If you ever decide to return, we'll be glad to welcome you back. Feel free to reach out if you have any questions or feedback!
             </p>
@@ -160,14 +160,14 @@
       </div>
     </section>
 
-    <section id="payment-section" class="payment section" hidden>
+    <section id="payment-section" class="payment section" aria-labelledby="payment-screen" hidden>
       <div class="card payment-card container">
         <div class="card__img">
-          <img src="images/illustration-hero.svg" alt="cartoon figure with headphones on their head dancing to music from a phone held in one hand with an outline of a city and music notes in the background">
+          <img src="assets/images/illustration-hero.svg" alt="cartoon figure with headphones on their head dancing to music from a phone held in one hand with an outline of a city and music notes in the background" width="450" height="220">
         </div>
         <div class="card__content flow">
           <form class="payment__form">
-            <h2 class="h2">Payment Details</h2>
+            <h2 id="payment-screen" class="h2">Payment Details</h2>
             <div class="form__control-wrapper">
               <label for="card-number">Card Number:</label>
               <input id="card-number" class="numeric-input" type="text" data-inputmode="numeric" minlength="13" maxlength="19" pattern="[0-9\s]{13,19}" placeholder="1234 5678 9012 3456" required>
@@ -205,14 +205,14 @@
       </div>
     </section>
 
-    <section id="thank-you-section" class="thank-you section" hidden>
+    <section id="thank-you-section" class="thank-you section" aria-labelledby="thank-you-screen" hidden>
       <div class="card thank-you-card container">
         <div class="card__img">
-          <img src="images/illustration-hero.svg" alt="cartoon figure with headphones on their head dancing to music from a phone held in one hand with an outline of a city and music notes in the background">
+          <img src="assets/images/illustration-hero.svg" alt="cartoon figure with headphones on their head dancing to music from a phone held in one hand with an outline of a city and music notes in the background" width="450" height="220">
         </div>
         <div class="card__content flow">
           <header class="flow">
-            <h2 class="h2">Order Placed</h2>
+            <h2 id="thank-you-screen" class="h2">Order Placed</h2>
             <p>
               Your order has been succesfully placed and we're happy to see you join SoundSpace! We hope you enjoy listening together with us. Feel free to reach out if you have any questions or feedback!
             </p>
