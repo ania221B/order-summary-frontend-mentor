@@ -231,7 +231,7 @@ export function checkValue (targetInput) {
   } else if (value.length < min) {
     return `${labelText} must have at least ${min} digits`
   } else if (value.length > max) {
-    return ` ${labelText} must have at most ${max} digits`
+    return `${labelText} must have at most ${max} digits`
   } else {
     return null
   }
@@ -297,6 +297,10 @@ export function validateCardCode () {
   const { form } = initDOMElements()
   const cardCode = form.querySelector('#card-code')
   const cardCodeValue = cardCode.value.trim()
+  const cardCodeLabel =
+    cardCode.parentElement.querySelector('label').textContent
+
+  const cardCodeLabelText = cardCodeLabel.slice(0, cardCodeLabel.length - 1)
   const cardNumberValue = form.querySelector('#card-number').value.trim()
   const isLengthOK = checkValue(cardCode)
 
@@ -308,7 +312,7 @@ export function validateCardCode () {
     cardNumberValue.substring(0, 2) === '37'
   ) {
     if (cardCodeValue.length < 4) {
-      return 'Card code must be 4 digits'
+      return `${cardCodeLabelText} must be 4 digits`
     }
   }
   return null
