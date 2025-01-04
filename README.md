@@ -95,10 +95,10 @@ This project includes unit tests for core functionality. Key areas tested includ
 Coverage report
 
 ```
-Statements   : 93.91%
-Branches     : 87.6%
+Statements   : 94.04%
+Branches     : 88%
 Functions    : 95%
-Lines        : 95.02%
+Lines        : 95.13%
 ```
 
 ## Author
