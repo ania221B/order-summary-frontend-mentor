@@ -2,21 +2,21 @@
 *,
 *::after,
 *::before {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 /* Sets root core defaults */
 
 html:focus-within {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 /* Sets body core defaults */
 
 body {
-    min-height: 100vh;
-    text-rendering: optimizeSpeed;
-    line-height: 1.6;
+  min-height: 100dvh;
+  text-rendering: optimizeSpeed;
+  line-height: 1.6;
 }
 
 /* Resets margins */
@@ -32,7 +32,7 @@ blockquote,
 figure,
 dl,
 dd {
-    margin: 0;
+  margin: 0;
 }
 
 /* Removes unnecessary space caused by line height */
@@ -42,30 +42,30 @@ h2,
 h3,
 h4,
 h5 {
-    line-height: 1.1;
+  line-height: 1.1;
 }
 
 /* a elements without a class get default styling */
 
 a:not([class]) {
-    text-decoration-skip-ink: auto;
+  text-decoration-skip-ink: auto;
 }
 
 /* makes images easier to work with */
 
 img,
 picture {
-    max-width: 100%;
-    display: block;
-    object-fit: cover;
+  max-width: 100%;
+  display: block;
+  object-fit: cover;
 }
 
 /* Removes list styling from lists that have the role of list set */
 
-ul[role="list"],
-ol[role="list"] {
- list-style: none;
- margin: 0;
+ul[role='list'],
+ol[role='list'] {
+  list-style: none;
+  margin: 0;
 }
 
 /* Sets font inheritance for buttons and input elements */
@@ -73,23 +73,22 @@ button,
 input,
 select,
 textarea {
-    font: inherit;
+  font: inherit;
 }
 
-/* Removes animations and transitions for people who prefer not to see them */ 
+/* Removes animations and transitions for people who prefer not to see them */
 
 @media (prefers-reduced-motion: reduce) {
-    html:focus-within {
-        scroll-behavior: auto;
-    }
+  html:focus-within {
+    scroll-behavior: auto;
+  }
 
-    *,
-    *::after,
-    *::before {
-        animation-iteration-count: 1 !important;
-        animation-duration: 0.01ms !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto;
-    }
+  *,
+  *::after,
+  *::before {
+    animation-iteration-count: 1 !important;
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto;
+  }
 }
-
