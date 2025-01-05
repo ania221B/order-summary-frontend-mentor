@@ -46,6 +46,8 @@
   --clr-secondary-300: hsla(245, 75%, 52%, 0.3);
   --clr-secondary-400: hsl(245, 75%, 52%);
 
+  --clr-accent-400: rgb(16, 209, 183);
+
   --clr-error: #ff4c4c;
 
   --br: 1.5em;
@@ -75,7 +77,7 @@ body {
   font-weight: var(--fw-500);
   color: var(--clr-primary-700);
   background-color: var(--clr-secondary-100);
-  background-image: url('../assets/images/pattern-background-mobile.svg');
+  background-image: url('/assets/images/pattern-background-desktop.svg');
   background-repeat: no-repeat;
   background-size: 100dvw;
 
@@ -135,7 +137,7 @@ body[data-state='reveal-screen']::before {
 
 @media (max-width: 37.5em) {
   body {
-    background-image: url(../images/pattern-background-desktop.svg);
+    background-image: url('/assets/images/pattern-background-mobile.svg');
   }
   body[data-state]::before {
     animation-duration: 1350ms;
@@ -405,13 +407,40 @@ footer {
   color: var(--fg-hover);
 }
 
+.btn:focus-visible {
+  outline-color: var(--clr-primary-900);
+}
+
 .attribution {
   font-size: 11px;
   text-align: center;
   padding-block-end: 1em;
 }
 .attribution a {
-  color: var(--clr-secondary-400);
+  display: inline-block;
+  color: transparent;
+  background-image: linear-gradient(
+    to right,
+    var(--clr-accent-400) 0% 50%,
+    var(--clr-secondary-400) 50% 100%
+  );
+  background-size: 200%;
+  background-position: right;
+  background-clip: text;
+  -webkit-background-clip: text;
+  transition: background-position 300ms ease-in-out;
+  position: relative;
+  isolation: isolate;
+}
+
+.attribution a:hover,
+.attribution a:focus {
+  background-position: left;
+}
+
+.attribution a:focus-visible {
+  outline-offset: 0.5em;
+  outline-color: var(--clr-primary-900);
 }
 
 /* ===== FORM ===== */
